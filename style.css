@@ -1,0 +1,12 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(10deg, #fc45e0, #439bf6);
+}
+
+img {
+  max-width: 52%;
+  filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5));
+}
