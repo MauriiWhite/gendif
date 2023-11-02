@@ -1,1 +1,0 @@
-# Proyecto Gendif - Un lugar de impacto

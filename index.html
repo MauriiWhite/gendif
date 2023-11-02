@@ -17,19 +17,149 @@
       name="og:image"
       content="https://www.instagram.com/gen.dif/?hl=es-la"
     />
+    <style>
+      :root {
+        --cyan: #439bf6;
+        --fuksia: #fc45e0;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+        background-image: linear-gradient(10deg, var(--fuksia), var(--cyan));
+        background-size: cover cover;
+      }
+
+      .panel {
+        position: absolute;
+        display: flex;
+        gap: 0.7rem;
+        top: 3.4%;
+        left: 3.4%;
+        padding: 1rem;
+        z-index: 10;
+      }
+
+      .panel > * {
+        cursor: pointer;
+        font-size: 2rem;
+        color: aliceblue;
+        transition: all 500ms ease;
+        opacity: 0.7;
+      }
+
+      .panel > *:hover {
+        opacity: 1;
+        transform: scale(1.1);
+      }
+
+      img {
+        max-width: 40%;
+        filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5));
+        animation: opacity 1000ms ease 1, infinite-motion 7s ease infinite;
+      }
+
+      .particle-container {
+        position: absolute;
+        width: 50%;
+        height: 70%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .particle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--cyan);
+        transition: all 1s ease;
+      }
+
+      @keyframes opacity {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes infinite-motion {
+        0%,
+        100% {
+          transform: translateY(14px);
+        }
+        50% {
+          transform: translateY(-14px);
+        }
+      }
+
+      @media (max-width: 1068px) {
+        img {
+          max-width: 70%;
+        }
+        .panel > * {
+          opacity: 1;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="panel">
-      <a href="https://www.instagram.com/gen.dif/?hl=es-la"
+      <a href="https://www.instagram.com/gen.dif/?hl=es-la" target="_blank"
         ><ion-icon name="logo-instagram"></ion-icon
       ></a>
-      <a href="https://web.facebook.com/gendif/?_rdc=1&_rdr"
+      <a href="https://web.facebook.com/gendif/?_rdc=1&_rdr" target="_blank"
         ><ion-icon name="logo-facebook"></ion-icon
       ></a>
     </div>
     <img src="images/gendif.png" alt="icon" />
     <div class="particle-container"></div>
-    <script src="script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const container = document.querySelector(".particle-container");
+        const colors = ["#439bf6", "#fc45e0"];
+
+        function createParticle() {
+          const particle = document.createElement("div");
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+          particle.className = "particle";
+          particle.style.backgroundColor = randomColor;
+          particle.style.boxShadow = `0 0 1rem ${randomColor}, 0 0 1.5rem ${randomColor}`;
+
+          const size = Math.random() * 30 + 10;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+
+          const x = Math.random() * window.innerWidth;
+          const y = Math.random() * window.innerHeight;
+          particle.style.transform = `translate(${x}px, ${y}px)`;
+
+          container.appendChild(particle);
+
+          requestAnimationFrame(() => {
+            particle.style.transform = "translate(0, 0)";
+            particle.style.opacity = 1;
+          });
+
+          setTimeout(() => {
+            particle.style.opacity = 0;
+            requestAnimationFrame(() => {
+              container.removeChild(particle);
+            });
+          }, 700);
+        }
+
+        setInterval(createParticle, 70);
+      });
+    </script>
     <script
       type="module"
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
